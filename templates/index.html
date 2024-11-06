@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transcription & Translation Web App</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+
+    
+    <h1>Audio Transcription & Translation</h1>
+
+    <!-- Tab links -->
+    <div class="tab">
+        <button class="tablinks active" onclick="openTab(event, 'uploadAudio')">Upload Audio</button>
+        <button class="tablinks" onclick="openTab(event, 'recordAudio')">Record Audio</button>
+        <button class="tablinks" onclick="openTab(event, 'translateText')">Translate Text</button>
+    </div>
+
+    <!-- Tab content -->
+    <div id="uploadAudio" class="tabcontent active">
+        <form id="uploadForm"> 
+            <input type="file" id="audioFile" name="audio" onchange="loadAudio()">
+            <audio id="uploadedAudio" controls style="display:none;">
+                <source id="audioSource" type="audio/mp3">
+                Your browser does not support the audio element.
+            </audio>
+            
+            <button type="button" onclick="validateAndTranscribe('file')" id="transcribeUploadBtn">Transcribe</button>
+             <textarea id="transcriptionResult" placeholder="Transcription will appear here..." readonly></textarea>
+        </form>
+    </div>
+
+    <div id="recordAudio" class="tabcontent"> 
+        <button id="recordBtn" onclick="startRecording()">Start Recording</button>
+        <button id="stopBtn" onclick="stopRecording()" disabled>Stop Recording</button>
+        <audio id="recordedAudio" controls style="display:none;"></audio>
+        <br>
+        <button type="button" id="transcribeRecordedAudioBtn" onclick="validateAndTranscribe('record')">Transcribe</button>
+         <textarea id="transcriptionResult2" placeholder="Transcription will appear here..." readonly></textarea>
+    </div>
+
+    <!-- Translation Tab content -->
+    <div id="translateText" class="tabcontent"> 
+        <textarea id="textToTranslate" placeholder="Enter text here..."></textarea>
+        <select id="targetLanguage">
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+        </select>
+        <button type="button" onclick="validateAndTranslate()">Translate</button>
+        <textarea id="translationResult" placeholder="Translation will appear here..." readonly></textarea>
+    </div>
+
+    <!-- Modal for showing messages -->
+<div id="messageModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-text-container">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <p id="modalMessage">This is a modal message.</p>
+        </div>
+        <div class="modal-actions"> 
+        </div>
+    </div>
+</div>
+
+
+    <script src="/static/scripts.js"></script>
+</body>
+</html>
