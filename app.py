@@ -16,15 +16,20 @@ def index():
 
 @app.route("/transcribe", methods=["POST"])
 def transcribe_audio():
-    audio_file = request.files["audio"]
-    file_path = os.path.join(UPLOAD_FOLDER, audio_file.filename)
-    audio_file.save(file_path)
+    try:
+        audio_file = request.files["audio"]
+        file_path = os.path.join(UPLOAD_FOLDER, audio_file.filename)
+        audio_file.save(file_path)
+        
+        # Transcribe audio
+        result = model.transcribe(file_path)
+        transcription_text = result["text"]
 
-    # Transcribe audio
-    result = model.transcribe(file_path)
-    transcription_text = result["text"]
-    
-    return jsonify({"transcription": transcription_text})
+        return jsonify({"transcription": transcription_text})
+    except Exception as e:
+        print(f"Error occurred during transcription: {e}")
+        return jsonify({"transcription": "", "error": str(e)}), 500
+
 
 @app.route("/translate", methods=["POST"])
 def translate_text():
