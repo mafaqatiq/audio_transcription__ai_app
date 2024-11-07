@@ -4,7 +4,7 @@ from googletrans import Translator
 import os
 
 app = Flask(__name__)
-model = whisper.load_model("base")
+model = whisper.load_model("tiny")
 translator = Translator()
 
 UPLOAD_FOLDER = "uploads"
